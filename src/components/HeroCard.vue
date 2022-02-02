@@ -1,5 +1,5 @@
 <template>
-  <li>
+  <li class="flex max-w-[256px] max-h-[144px] w-full h-full">
     <button
       class="relative w-full aspect-video"
       type="button"
