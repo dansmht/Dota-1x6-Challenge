@@ -1,15 +1,15 @@
 <template>
   <the-header />
-  <suspense>
-    <dota-challenge />
-  </suspense>
+  <dota-challenge />
+  <the-footer />
 </template>
 
 <script>
 import TheHeader from "./TheHeader.vue";
 import DotaChallenge from "./DotaChallenge.vue";
+import TheFooter from "./TheFooter.vue";
 
 export default {
-  components: { TheHeader, DotaChallenge },
+  components: { TheHeader, DotaChallenge, TheFooter },
 };
 </script>
