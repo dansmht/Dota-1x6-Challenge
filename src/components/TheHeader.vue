@@ -9,7 +9,7 @@
     "
   >
     <div class="container h-full flex justify-between items-center">
-      <div>Logo</div>
+      <app-logo />
       <button v-if="!store.user" type="button" @click="signInWithGoogle">
         Sign In
       </button>
@@ -19,10 +19,14 @@
 </template>
 
 <script>
+import AppLogo from "./AppLogo.vue";
+
 import { store } from "../store";
 import { signInWithGoogle, signOut } from "../supabase";
 
 export default {
+  components: { AppLogo },
+
   setup() {
     return { store, signInWithGoogle, signOut };
   },

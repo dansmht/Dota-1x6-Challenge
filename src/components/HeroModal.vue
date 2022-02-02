@@ -73,7 +73,7 @@
 </template>
 
 <script>
-import { ref, toRefs } from "@vue/reactivity";
+import { toRefs } from "@vue/reactivity";
 
 import { useHandlingEscapePress, useLoading } from "../composables";
 import { store } from "../store";
