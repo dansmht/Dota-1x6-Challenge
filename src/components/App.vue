@@ -1,3 +1,15 @@
 <template>
-  <h1>Dota 1x6 Challenge</h1>
+  <the-header />
+  <dota-challenge />
+  <the-footer />
 </template>
+
+<script>
+import TheHeader from "./TheHeader.vue";
+import DotaChallenge from "./DotaChallenge.vue";
+import TheFooter from "./TheFooter.vue";
+
+export default {
+  components: { TheHeader, DotaChallenge, TheFooter },
+};
+</script>
