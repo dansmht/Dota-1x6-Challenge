@@ -1,7 +1,7 @@
 <template>
   <div class="flex justify-between items-center gap-4 my-4">
     <div class="text-xl">Statistics</div>
-    <div v-if="initialized" class="flex items-center gap-4">
+    <div v-if="!heroesLoading" class="flex items-center gap-4">
       <div class="font-bold">
         {{ completedHeroesCount }} / {{ allHeroesCount }}
         <span class="font-normal" :class="completedHeroesPercentageTextColor"
@@ -41,7 +41,7 @@ import { resetChallengeProgress } from "../services/supabase";
 
 export default {
   setup() {
-    const initialized = computed(() => store.initialized);
+    const heroesLoading = computed(() => store.heroesLoading);
 
     const allHeroesCount = computed(() => store.heroes.length);
     const completedHeroesCount = computed(
@@ -91,14 +91,12 @@ export default {
 
     const resetProgress = () => {
       if (confirm("Are you sure? Your progress will be deleted!")) {
-        if (store.user?.id) {
-          resetChallengeProgress(store.user.id);
-        }
+        resetChallengeProgress();
       }
     };
 
     return {
-      initialized,
+      heroesLoading,
       allHeroesCount,
       completedHeroesCount,
       completedHeroesPercent,

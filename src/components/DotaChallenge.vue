@@ -2,7 +2,14 @@
   <main class="container flex-grow flex flex-col">
     <h1 class="sr-only">Dota 1x6 Challenge</h1>
 
-    <template v-if="store.user && store.initialized">
+    <div
+      v-if="store.heroesLoading"
+      class="flex-grow flex justify-center items-center"
+    >
+      <loader />
+    </div>
+
+    <template v-else>
       <challenge-stats />
       <div>
         <hero-list
@@ -21,27 +28,6 @@
         />
       </div>
     </template>
-
-    <div
-      v-else-if="!store.user"
-      class="
-        text-center text-xl
-        absolute
-        left-4
-        right-4
-        top-1/2
-        -translate-y-1/2
-      "
-    >
-      You should Sign In to use this App
-    </div>
-
-    <div
-      v-else-if="!store.initialized"
-      class="flex-grow flex justify-center items-center"
-    >
-      <loader />
-    </div>
   </main>
   <hero-modal :isOpen="isOpen" :hero="activeHero" @toggleModal="toggleModal" />
 </template>

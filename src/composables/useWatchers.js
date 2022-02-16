@@ -2,13 +2,13 @@ import { watch } from "@vue/runtime-core";
 
 import { store } from "../store";
 import { getHeroesProgressFromSupabase } from "../services/supabase";
+import { setCompletedHeroesLS } from "../services/localStorage";
 
 const useWatchers = () => {
   watch(
     () => store.user,
     async () => {
       await getHeroesProgressFromSupabase();
-      store.initialized = true;
     },
     { deep: true }
   );
@@ -27,6 +27,7 @@ const useWatchers = () => {
           } else {
             delete store.completedHeroes[name];
           }
+          setCompletedHeroesLS(store.completedHeroes);
         }
       });
     },
