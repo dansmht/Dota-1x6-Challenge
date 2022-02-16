@@ -9,7 +9,6 @@ export const getHeroesProgressLS = () => {
 };
 
 export const setHeroesProgressLS = (heroesProgress) => {
-  console.log("1 setHeroesProgressLS");
   return localStorage.setItem(HEROES_PROGRESS, JSON.stringify(heroesProgress));
 };
 
@@ -18,7 +17,6 @@ const getCompletedHeroesLS = () => {
 };
 
 export const setCompletedHeroesLS = (completedHeroes) => {
-  console.log("2 setCompletedHeroesLS");
   return localStorage.setItem(
     COMPLETED_HEROES,
     JSON.stringify(completedHeroes)
@@ -27,10 +25,6 @@ export const setCompletedHeroesLS = (completedHeroes) => {
 
 export const compareHeroesProgressWithLS = (heroesProgress) => {
   const heroesProgressLS = getHeroesProgressLS();
-
-  console.log(JSON.stringify(heroesProgress));
-  console.log(heroesProgressLS);
-  console.log(JSON.stringify(heroesProgress) === heroesProgressLS);
 
   if (JSON.stringify(heroesProgress) === heroesProgressLS) {
     return true;

@@ -1,11 +1,6 @@
 import { store } from "../store";
 import { supabase } from "../supabase";
-import {
-  compareHeroesProgressWithLS,
-  setCompletedHeroesLS,
-  setHeroesProgressLS,
-  getHeroesProgressLS,
-} from "./localStorage";
+import { compareHeroesProgressWithLS } from "./localStorage";
 
 export const completeSkill = async (hero, skill) => {
   const updatedHeroesProgress = store.heroesProgress;
@@ -14,8 +9,6 @@ export const completeSkill = async (hero, skill) => {
     updatedHeroesProgress[hero] = {};
   }
   updatedHeroesProgress[hero][skill] = true;
-
-  setHeroesProgressLS(updatedHeroesProgress);
 
   await setHeroesProgressToSupabase(updatedHeroesProgress);
 };
@@ -28,8 +21,6 @@ export const cancelSkill = async (hero, skill) => {
   if (Object.values(updatedHeroesProgress[hero]).length === 0) {
     delete updatedHeroesProgress[hero];
   }
-
-  setHeroesProgressLS(updatedHeroesProgress);
 
   if (store.user?.id) {
     if (Object.values(updatedHeroesProgress).length === 0) {
@@ -75,8 +66,6 @@ export const getHeroesProgressFromSupabase = async () => {
 export const resetChallengeProgress = async () => {
   store.completedHeroes = {};
   store.heroesProgress = {};
-
-  setHeroesProgressLS({});
 
   if (store.user?.id) {
     await supabase.from("challenge").delete().match({ user_id: store.user.id });

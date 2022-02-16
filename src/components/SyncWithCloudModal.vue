@@ -49,7 +49,6 @@ import UploadIcon from "./icons/UploadIcon.vue";
 
 import { store } from "../store";
 import { setHeroesProgressToSupabase } from "../services/supabase";
-import { setHeroesProgressLS } from "../services/localStorage";
 
 export default {
   components: { DownloadIcon, UploadIcon },
@@ -67,7 +66,6 @@ export default {
         const cloudData = JSON.parse(JSON.stringify(store.cloud.data));
         store.completedHeroes = {};
         store.heroesProgress = cloudData;
-        setHeroesProgressLS(cloudData);
       }
       store.cloud.showSyncModal = false;
     };

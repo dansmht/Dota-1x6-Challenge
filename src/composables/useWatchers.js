@@ -2,7 +2,10 @@ import { watch } from "@vue/runtime-core";
 
 import { store } from "../store";
 import { getHeroesProgressFromSupabase } from "../services/supabase";
-import { setCompletedHeroesLS } from "../services/localStorage";
+import {
+  setCompletedHeroesLS,
+  setHeroesProgressLS,
+} from "../services/localStorage";
 
 const useWatchers = () => {
   watch(
@@ -28,7 +31,6 @@ const useWatchers = () => {
         } else {
           delete store.completedHeroes[name];
         }
-        setCompletedHeroesLS(store.completedHeroes);
       }
     });
   };
@@ -36,19 +38,19 @@ const useWatchers = () => {
   watch(
     () => store.heroesProgress,
     () => {
-      console.log("UPDATE DEEP heroesProgress");
+      setHeroesProgressLS(store.heroesProgress);
       updateCompletedHeroes();
     },
     { deep: true }
   );
 
-  // watch(
-  //   () => store.heroesProgress,
-  //   () => {
-  //     console.log("UPDATE heroesProgress");
-  //     updateCompletedHeroes();
-  //   }
-  // );
+  watch(
+    () => store.completedHeroes,
+    () => {
+      setCompletedHeroesLS(store.completedHeroes);
+    },
+    { deep: true }
+  );
 };
 
 export default useWatchers;
