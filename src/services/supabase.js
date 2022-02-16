@@ -1,6 +1,11 @@
 import { store } from "../store";
 import { supabase } from "../supabase";
-import { setCompletedHeroesLS, setHeroesProgressLS } from "./localStorage";
+import {
+  compareHeroesProgressWithLS,
+  setCompletedHeroesLS,
+  setHeroesProgressLS,
+  getHeroesProgressLS,
+} from "./localStorage";
 
 export const completeSkill = async (hero, skill) => {
   const updatedHeroesProgress = store.heroesProgress;
@@ -12,15 +17,7 @@ export const completeSkill = async (hero, skill) => {
 
   setHeroesProgressLS(updatedHeroesProgress);
 
-  if (store.user?.id) {
-    await supabase
-      .from("challenge")
-      .upsert(
-        { heroes: updatedHeroesProgress, user_id: store.user.id },
-        { onConflict: "user_id" }
-      )
-      .match({ user_id: store.user.id });
-  }
+  await setHeroesProgressToSupabase(updatedHeroesProgress);
 };
 
 export const cancelSkill = async (hero, skill) => {
@@ -41,14 +38,20 @@ export const cancelSkill = async (hero, skill) => {
         .delete()
         .match({ user_id: store.user.id });
     } else {
-      await supabase
-        .from("challenge")
-        .upsert(
-          { heroes: updatedHeroesProgress, user_id: store.user.id },
-          { onConflict: "user_id" }
-        )
-        .match({ user_id: store.user.id });
+      await setHeroesProgressToSupabase(updatedHeroesProgress);
     }
+  }
+};
+
+export const setHeroesProgressToSupabase = async (heroesProgress) => {
+  if (store.user?.id) {
+    await supabase
+      .from("challenge")
+      .upsert(
+        { heroes: heroesProgress, user_id: store.user.id },
+        { onConflict: "user_id" }
+      )
+      .match({ user_id: store.user.id });
   }
 };
 
@@ -60,22 +63,22 @@ export const getHeroesProgressFromSupabase = async () => {
       .match({ user_id: store.user.id });
 
     if (Array.isArray(data)) {
-      store.heroesProgress = data[0]?.heroes ?? {};
+      const heroesProgress = data[0]?.heroes ?? {};
+      if (!compareHeroesProgressWithLS(heroesProgress)) {
+        store.cloud.showSyncModal = true;
+        store.cloud.data = heroesProgress;
+      }
     }
   }
 };
 
 export const resetChallengeProgress = async () => {
-  store.heroesProgress = {};
   store.completedHeroes = {};
+  store.heroesProgress = {};
 
   setHeroesProgressLS({});
-  setCompletedHeroesLS({});
 
   if (store.user?.id) {
     await supabase.from("challenge").delete().match({ user_id: store.user.id });
-
-    store.heroesProgress = {};
-    store.completedHeroes = {};
   }
 };

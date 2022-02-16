@@ -13,26 +13,42 @@ const useWatchers = () => {
     { deep: true }
   );
 
+  const updateCompletedHeroes = () => {
+    if (Object.keys(store.heroesProgress).length === 0) {
+      store.completedHeroes = {};
+    }
+    store.heroes.forEach(({ name }) => {
+      const heroProgress = store.heroesProgress[name];
+
+      if (heroProgress) {
+        const values = Object.values(heroProgress);
+
+        if (values.length === 4 && values.every(Boolean)) {
+          store.completedHeroes[name] = true;
+        } else {
+          delete store.completedHeroes[name];
+        }
+        setCompletedHeroesLS(store.completedHeroes);
+      }
+    });
+  };
+
   watch(
     () => store.heroesProgress,
     () => {
-      store.heroes.forEach(({ name }) => {
-        const heroProgress = store.heroesProgress[name];
-
-        if (heroProgress) {
-          const values = Object.values(heroProgress);
-
-          if (values.length === 4 && values.every(Boolean)) {
-            store.completedHeroes[name] = true;
-          } else {
-            delete store.completedHeroes[name];
-          }
-          setCompletedHeroesLS(store.completedHeroes);
-        }
-      });
+      console.log("UPDATE DEEP heroesProgress");
+      updateCompletedHeroes();
     },
     { deep: true }
   );
+
+  // watch(
+  //   () => store.heroesProgress,
+  //   () => {
+  //     console.log("UPDATE heroesProgress");
+  //     updateCompletedHeroes();
+  //   }
+  // );
 };
 
 export default useWatchers;

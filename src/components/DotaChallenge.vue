@@ -30,6 +30,7 @@
     </template>
   </main>
   <hero-modal :isOpen="isOpen" :hero="activeHero" @toggleModal="toggleModal" />
+  <sync-with-cloud-modal />
 </template>
 
 <script>
@@ -38,6 +39,7 @@ import HeroList from "./HeroList.vue";
 import HeroCard from "./HeroCard.vue";
 import HeroModal from "./HeroModal.vue";
 import Loader from "./Loader.vue";
+import SyncWithCloudModal from "./SyncWithCloudModal.vue";
 
 import {
   useActiveHero,
@@ -49,7 +51,14 @@ import {
 import { store } from "../store";
 
 export default {
-  components: { HeroCard, ChallengeStats, HeroModal, Loader, HeroList },
+  components: {
+    HeroCard,
+    ChallengeStats,
+    HeroModal,
+    Loader,
+    HeroList,
+    SyncWithCloudModal,
+  },
   setup() {
     useUserSubscription();
 

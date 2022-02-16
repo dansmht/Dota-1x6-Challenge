@@ -8,4 +8,8 @@ export const store = reactive({
   heroesProgress: {},
   completedHeroes: {},
   heroes,
+  cloud: {
+    showSyncModal: false,
+    data: null,
+  },
 });
