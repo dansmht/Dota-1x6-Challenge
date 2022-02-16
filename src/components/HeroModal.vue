@@ -3,9 +3,10 @@
     <div
       v-if="isOpen"
       class="fixed inset-0 bg-slate-900/70 cursor-pointer"
+      tabindex="0"
       @click="toggleModal"
     >
-      <div class="bg-red-900/501 flex justify-center items-center h-full px-4">
+      <div class="flex justify-center items-center h-full px-4">
         <ul
           class="
             grid

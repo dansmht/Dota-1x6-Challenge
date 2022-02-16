@@ -11,9 +11,11 @@
     <div class="container h-full flex justify-between items-center">
       <app-logo />
       <button v-if="!store.user" type="button" @click="signInWithGoogle">
-        Sign In
+        Cloud Save <span class="text-red-400 font-bold">Off</span>
       </button>
-      <button v-else type="button" @click="signOut">Sign Out</button>
+      <button v-else type="button" @click="signOut">
+        Cloud Save <span class="text-green-400 font-bold">On</span>
+      </button>
     </div>
   </header>
 </template>
