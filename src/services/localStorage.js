@@ -56,7 +56,9 @@ const syncCompletedHeroes = () => {
 
   const completedHeroes = JSON.parse(completedHeroesLS);
 
-  store.completedHeroes = completedHeroes;
+  if (HeroesHelper.isCompleted(completedHeroes)) {
+    store.completedHeroes = completedHeroes;
+  }
 };
 
 export const syncStoreWithLS = () => {

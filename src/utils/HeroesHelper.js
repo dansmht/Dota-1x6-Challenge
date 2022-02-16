@@ -18,8 +18,17 @@ export class HeroesHelper {
     }
     return false;
   };
+
+  static isCompleted = (completedHeroes) => {
+    if (isObject(completedHeroes)) {
+      return Object.keys(completedHeroes).every((hero) =>
+        allHeroes.includes(hero)
+      );
+    }
+    return false;
+  };
 }
 
 const isObject = (value) => {
-  return typeof value === "object" && value !== null;
+  return typeof value === "object" && !Array.isArray(value) && value !== null;
 };
