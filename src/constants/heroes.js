@@ -1,4 +1,5 @@
 export const allHeroes = [
+  "alchemist",
   "axe",
   "bristleback",
   "ember_spirit",
