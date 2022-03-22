@@ -8,6 +8,7 @@ export const allHeroes = [
   "juggernaut",
   "legion_commander",
   "lina",
+  "ogre_magi",
   "phantom_assassin",
   "puck",
   "pudge",
